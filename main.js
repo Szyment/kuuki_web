@@ -14,6 +14,7 @@ const DEFAULT_LIVE_DATA = {
 };
 
 const STORAGE_KEY = "kuuki:last-live-data";
+const THEME_STORAGE_KEY = "kuuki:theme";
 
 const elements = {
   heroLiveBadge: document.getElementById("hero-live-badge"),
@@ -29,6 +30,7 @@ const elements = {
   dashboardHeroLink: document.getElementById("dashboard-hero-link"),
   dashboardNavLink: document.getElementById("dashboard-nav-link"),
   dashboardCardLink: document.getElementById("dashboard-card-link"),
+  themeToggle: document.getElementById("theme-toggle"),
   navToggle: document.querySelector(".nav-toggle"),
   navPanel: document.getElementById("site-menu")
 };
@@ -313,7 +315,7 @@ function renderFallbackMessage(message) {
 function renderLiveData(data, options = {}) {
   const {
     isFallback = false,
-    sourceLabel = "Dane live aktywne",
+    sourceLabel = "Dane na żywo aktywne",
     fallbackMessage = null,
     loading = false,
     badgeText = ""
@@ -329,10 +331,10 @@ function renderLiveData(data, options = {}) {
   elements.heroLiveBadgeText.textContent =
     badgeText ||
     (loading
-      ? "Ładowanie danych live…"
+      ? "Ładowanie danych na żywo…"
       : isFallback
-        ? `Brak live · ostatnia poprawna aktualizacja ${relativeTimestamp}`
-        : `LIVE · aktualizacja ${relativeTimestamp}`);
+        ? `Brak danych na żywo · ostatnia poprawna aktualizacja ${relativeTimestamp}`
+        : `NA ŻYWO · aktualizacja ${relativeTimestamp}`);
   elements.footerDataState.textContent = sourceLabel;
 
   setStatusTheme(data.statusColor, isFallback);
@@ -438,7 +440,7 @@ async function refreshLiveData() {
     const data = await fetchLiveData();
     renderLiveData(data, {
       isFallback: false,
-      sourceLabel: "Dane live aktywne"
+      sourceLabel: "Dane na żywo aktywne"
     });
     saveCachedData(data);
   } catch (error) {
@@ -469,7 +471,7 @@ function configureDashboardLinks() {
       link.classList.remove("is-disabled");
       link.removeAttribute("aria-disabled");
       if (link.id === "dashboard-hero-link") {
-        link.innerHTML = 'Zobacz dane live <span aria-hidden="true">→</span>';
+        link.innerHTML = 'Zobacz dane na żywo <span aria-hidden="true">→</span>';
       }
       continue;
     }
@@ -478,9 +480,40 @@ function configureDashboardLinks() {
     link.classList.add("is-disabled");
     link.setAttribute("aria-disabled", "true");
     if (link.id === "dashboard-hero-link") {
-      link.innerHTML = "Dashboard w przygotowaniu";
+      link.innerHTML = "Panel w przygotowaniu";
     }
   }
+}
+
+function applyTheme(theme) {
+  const resolvedTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = resolvedTheme;
+
+  if (elements.themeToggle) {
+    elements.themeToggle.setAttribute("aria-pressed", String(resolvedTheme === "dark"));
+  }
+}
+
+function getPreferredTheme() {
+  const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  if (storedTheme === "dark" || storedTheme === "light") {
+    return storedTheme;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function setupThemeToggle() {
+  applyTheme(getPreferredTheme());
+
+  if (!elements.themeToggle) return;
+
+  elements.themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    applyTheme(nextTheme);
+  });
 }
 
 function setupMobileNav() {
@@ -502,6 +535,7 @@ function setupMobileNav() {
 
 function init() {
   configureDashboardLinks();
+  setupThemeToggle();
   setupMobileNav();
   renderLiveData(normalizeLiveData(DEFAULT_LIVE_DATA), {
     isFallback: false,

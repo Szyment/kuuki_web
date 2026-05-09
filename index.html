@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kuuki — school air quality project</title>
+    <title>Kuuki — szkolny projekt jakości powietrza</title>
     <meta
       name="description"
-      content="Kuuki to szkolny projekt jakości powietrza z danymi live, panelem dla szkoły i materiałem edukacyjnym dla uczniów."
+      content="Kuuki to szkolny projekt jakości powietrza z danymi na żywo, panelem dla szkoły i materiałem edukacyjnym dla uczniów."
     />
     <meta name="theme-color" content="#0bbcc6" />
-    <meta property="og:title" content="Kuuki — school air quality project" />
+    <meta property="og:title" content="Kuuki — szkolny projekt jakości powietrza" />
     <meta
       property="og:description"
-      content="Live air quality for smarter schools."
+      content="Dane o jakości powietrza dla nowocześniejszej szkoły."
     />
     <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,9 +21,9 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260509-1" />
-    <script src="./config.js?v=20260509-2" defer></script>
-    <script src="./main.js?v=20260509-2" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=20260509-3" />
+    <script src="./config.js?v=20260509-3" defer></script>
+    <script src="./main.js?v=20260509-3" defer></script>
   </head>
   <body>
     <div class="page-shell">
@@ -32,7 +32,7 @@
           <a class="brand" href="#top" aria-label="Kuuki">
             <span class="brand-copy">
               <span class="brand-title">Kuuki</span>
-              <span class="brand-subtitle">school air quality project</span>
+              <span class="brand-subtitle">szkolny projekt jakości powietrza</span>
             </span>
           </a>
 
@@ -50,12 +50,21 @@
 
           <div class="nav-panel" id="site-menu">
             <div class="nav-links">
-              <a href="#dane-live">Dane live</a>
+              <a href="#dane-live">Dane na żywo</a>
               <a href="#jak-dziala">Jak działa</a>
               <a href="#dla-nauczycieli">Dla nauczycieli</a>
               <a href="#dla-szkoly">Dla szkoły</a>
               <a href="#faq">FAQ</a>
             </div>
+            <button
+              class="button button-secondary theme-toggle"
+              id="theme-toggle"
+              type="button"
+              aria-pressed="false"
+              aria-label="Przełącz motyw jasny i ciemny"
+            >
+              Jasny / ciemny
+            </button>
             <a
               class="button button-primary nav-cta"
               id="dashboard-nav-link"
@@ -63,7 +72,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              Zobacz dashboard
+              Zobacz panel
             </a>
           </div>
         </nav>
@@ -76,10 +85,10 @@
             <div class="hero-copy">
               <div class="live-badge" id="hero-live-badge">
                 <span class="live-dot" aria-hidden="true"></span>
-                <span id="hero-live-badge-text">LIVE · aktualizacja 2 min temu</span>
+                <span id="hero-live-badge-text">NA ŻYWO · aktualizacja 2 min temu</span>
               </div>
               <h1>Kuuki</h1>
-              <p class="hero-subtitle">Live air quality for smarter schools.</p>
+              <p class="hero-subtitle">Dane o jakości powietrza dla nowocześniejszej szkoły.</p>
               <p class="hero-description">
                 Szkolna stacja jakości powietrza, która pokazuje aktualne dane w
                 lobby, wspiera decyzje administracji i zamienia pomiary w materiał
@@ -94,7 +103,7 @@
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Zobacz dane live
+                  Zobacz dane na żywo
                   <span aria-hidden="true">→</span>
                 </a>
                 <a class="button button-secondary" href="#jak-dziala">
@@ -221,7 +230,7 @@
                     />
                   </svg>
                 </span>
-                <span>Zobacz pełny dashboard ›</span>
+                <span>Zobacz pełny panel ›</span>
               </a>
             </aside>
           </div>
@@ -338,7 +347,7 @@
               <p class="section-kicker">Jak działa</p>
               <h2>Od czujnika w budynku do decyzji i materiału edukacyjnego.</h2>
               <p>
-                Kuuki łączy szkolny sensor, prosty dashboard i czytelną narrację,
+                Kuuki łączy szkolny sensor, prosty panel danych i czytelną narrację,
                 dzięki której dane stają się praktyczne dla całej społeczności.
               </p>
             </div>
@@ -349,7 +358,7 @@
                 <h3>Pomiar w czasie rzeczywistym</h3>
                 <p>
                   Stacja zbiera lokalne dane o pyle zawieszonym i publikuje je w
-                  lobby oraz w dashboardzie online.
+                  lobby oraz w panelu online.
                 </p>
               </article>
               <article class="process-card">
@@ -453,9 +462,9 @@
                 </p>
               </details>
               <details class="faq-item">
-                <summary>Czy dashboard można osadzić na ekranie w lobby?</summary>
+                <summary>Czy panel można osadzić na ekranie w lobby?</summary>
                 <p>
-                  Tak. CTA są przygotowane do podpięcia pod pełny dashboard lub ekran
+                  Tak. CTA są przygotowane do podpięcia pod pełny panel lub ekran
                   statusowy w osobnym widoku.
                 </p>
               </details>
@@ -475,7 +484,7 @@
         <div class="container footer-inner">
           <div>
             <p class="footer-title">Kuuki</p>
-            <p>school air quality project</p>
+            <p>szkolny projekt jakości powietrza</p>
           </div>
           <div class="footer-meta">
             <span id="footer-data-state">Tryb demonstracyjny danych</span>

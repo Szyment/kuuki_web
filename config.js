@@ -1,6 +1,6 @@
 window.KUUKI_CONFIG = {
   siteName: "Kuuki",
-  dashboardUrl: "https://thingspeak.com/channels/3175869",
+  dashboardUrl: "https://github.com/Szyment/kuuki",
   apiBaseUrl: "https://api.thingspeak.com",
   apiPath: "/channels/3175869/feeds/last.json",
   apiKey: "WSAWQYVYKHSSMRKI",
