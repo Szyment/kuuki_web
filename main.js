@@ -51,43 +51,135 @@ function normalizeMeasurement(item) {
 
 function normalizeLiveData(raw) {
   const payload = raw?.data ?? raw?.live ?? raw ?? {};
+  const timestamp = payload.lastUpdated || payload.updatedAt || payload.created_at || "";
   const measurements = Array.isArray(payload.measurements)
     ? payload.measurements.map(normalizeMeasurement).filter(Boolean)
-    : [
-        normalizeMeasurement({
-          label: "PM 1.0",
-          value: payload.pm1 ?? payload.pm1_0 ?? payload.pm_1_0,
-          unit: payload.unit,
-          status: payload.pm1Status ?? payload.status
-        }),
-        normalizeMeasurement({
-          label: "PM 2.5",
-          value: payload.pm25 ?? payload.pm2_5 ?? payload.pm_2_5,
-          unit: payload.unit,
-          status: payload.pm25Status ?? payload.status
-        }),
-        normalizeMeasurement({
-          label: "PM 10",
-          value: payload.pm10 ?? payload.pm_10,
-          unit: payload.unit,
-          status: payload.pm10Status ?? payload.status
-        })
-      ].filter((item) => item && item.value !== "—");
+    : buildMeasurementsFromPayload(payload);
+  const derivedStatus = deriveAirStatus(payload, measurements);
 
   return {
-    status: String(payload.status || DEFAULT_LIVE_DATA.status),
-    statusColor: String(payload.statusColor || inferStatusColor(payload.status)).toLowerCase(),
-    description: String(payload.description || DEFAULT_LIVE_DATA.description),
+    status: String(payload.status || derivedStatus.status || DEFAULT_LIVE_DATA.status),
+    statusColor: String(payload.statusColor || derivedStatus.statusColor || inferStatusColor(payload.status)).toLowerCase(),
+    description: String(payload.description || derivedStatus.description || DEFAULT_LIVE_DATA.description),
     location: String(
       payload.location || payload.sensorLocation || config.fallbackLocation || DEFAULT_LIVE_DATA.location
     ),
-    lastUpdated: formatAbsoluteTime(payload.lastUpdated || payload.updatedAt) || config.fallbackLastUpdated,
+    lastUpdated: formatAbsoluteTime(timestamp) || config.fallbackLastUpdated,
     lastUpdatedRelative:
-      payload.lastUpdatedRelative ||
-      formatRelativeTime(payload.lastUpdated || payload.updatedAt) ||
-      config.fallbackLastUpdatedRelative,
-    updatedAtRaw: payload.lastUpdated || payload.updatedAt || "",
+      payload.lastUpdatedRelative || formatRelativeTime(timestamp) || config.fallbackLastUpdatedRelative,
+    updatedAtRaw: timestamp,
     measurements: measurements.length ? measurements : DEFAULT_LIVE_DATA.measurements
+  };
+}
+
+function buildMeasurementsFromPayload(payload) {
+  const configuredFields = config.fieldLabels || {};
+  const thingSpeakFields = Object.entries(configuredFields)
+    .map(([fieldKey, label]) =>
+      normalizeMeasurement({
+        label,
+        value: payload[fieldKey],
+        unit: "µg/m³",
+        status: ""
+      })
+    )
+    .filter((item) => item && item.value !== "—");
+
+  if (thingSpeakFields.length) {
+    return thingSpeakFields.map((item) => ({
+      ...item,
+      status: item.status && item.status !== "Brak danych" ? item.status : deriveMeasurementStatus(item)
+    }));
+  }
+
+  return [
+    normalizeMeasurement({
+      label: "PM 1.0",
+      value: payload.pm1 ?? payload.pm1_0 ?? payload.pm_1_0,
+      unit: payload.unit,
+      status: payload.pm1Status ?? payload.status
+    }),
+    normalizeMeasurement({
+      label: "PM 2.5",
+      value: payload.pm25 ?? payload.pm2_5 ?? payload.pm_2_5,
+      unit: payload.unit,
+      status: payload.pm25Status ?? payload.status
+    }),
+    normalizeMeasurement({
+      label: "PM 10",
+      value: payload.pm10 ?? payload.pm_10,
+      unit: payload.unit,
+      status: payload.pm10Status ?? payload.status
+    })
+  ].filter((item) => item && item.value !== "—");
+}
+
+function deriveMeasurementStatus(measurement) {
+  const label = String(measurement?.label || "").toLowerCase();
+  const value = Number(measurement?.value);
+
+  if (Number.isNaN(value)) {
+    return "Brak danych";
+  }
+
+  if (label.includes("2.5")) {
+    if (value <= 15) return "Dobry";
+    if (value <= 35) return "Umiarkowany";
+    return "Słaby";
+  }
+
+  if (label.includes("10")) {
+    if (value <= 30) return "Dobry";
+    if (value <= 60) return "Umiarkowany";
+    return "Słaby";
+  }
+
+  if (label.includes("1.0")) {
+    if (value <= 10) return "Dobry";
+    if (value <= 25) return "Umiarkowany";
+    return "Słaby";
+  }
+
+  return "Dobry";
+}
+
+function deriveAirStatus(payload, measurements) {
+  const pm25Measurement = measurements.find((item) => item.label.includes("2.5"));
+  const pm10Measurement = measurements.find((item) => item.label.includes("10"));
+  const pm25 = Number(pm25Measurement?.value ?? payload.pm25 ?? payload.field2);
+  const pm10 = Number(pm10Measurement?.value ?? payload.pm10 ?? payload.field3);
+
+  const hasPm25 = !Number.isNaN(pm25);
+  const hasPm10 = !Number.isNaN(pm10);
+
+  if (!hasPm25 && !hasPm10) {
+    return {
+      status: DEFAULT_LIVE_DATA.status,
+      statusColor: DEFAULT_LIVE_DATA.statusColor,
+      description: DEFAULT_LIVE_DATA.description
+    };
+  }
+
+  if ((hasPm25 && pm25 > 35) || (hasPm10 && pm10 > 60)) {
+    return {
+      status: "SŁABSZY",
+      statusColor: "red",
+      description: "Warto ograniczyć intensywne aktywności i obserwować kolejne odczyty."
+    };
+  }
+
+  if ((hasPm25 && pm25 > 15) || (hasPm10 && pm10 > 30)) {
+    return {
+      status: "UMIARKOWANY",
+      statusColor: "amber",
+      description: "Jakość powietrza jest akceptowalna, ale warto śledzić zmiany w kolejnych pomiarach."
+    };
+  }
+
+  return {
+    status: "DOBRY",
+    statusColor: "green",
+    description: "Powietrze jest w dobrym zakresie. Możecie normalnie prowadzić zajęcia."
   };
 }
 
