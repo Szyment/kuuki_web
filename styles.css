@@ -492,10 +492,17 @@ svg {
 }
 
 .status-card-top {
-  display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  gap: 20px;
-  align-items: start;
+  display: block;
+}
+
+.status-card-heading {
+  margin-bottom: 18px;
+}
+
+.status-card-note {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  line-height: 1.65;
 }
 
 .eyebrow,
@@ -657,6 +664,10 @@ svg {
   background: var(--section-bg);
 }
 
+.section-pm-guide {
+  background: var(--section-soft-bg);
+}
+
 .section-heading {
   max-width: 760px;
   margin-bottom: 34px;
@@ -685,7 +696,14 @@ svg {
   gap: 18px;
 }
 
+.pm-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
 .benefit-card,
+.pm-guide-card,
 .process-card,
 .feature-panel,
 .metric-card,
@@ -698,6 +716,22 @@ svg {
 .benefit-card {
   padding: 24px;
   border-radius: var(--radius-lg);
+}
+
+.pm-guide-card {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+}
+
+.pm-guide-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.pm-guide-card p {
+  margin: 12px 0 0;
+  color: var(--text-soft);
+  line-height: 1.7;
 }
 
 .benefit-icon {
@@ -874,11 +908,16 @@ svg {
   flex-wrap: wrap;
 }
 
+.footer-link {
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
 @media (max-width: 1080px) {
   .hero-grid,
-  .status-card-top,
   .split-grid,
-  .benefits-grid {
+  .benefits-grid,
+  .pm-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -941,6 +980,7 @@ svg {
 
   .status-card-top,
   .benefits-grid,
+  .pm-guide-grid,
   .process-grid,
   .split-grid {
     grid-template-columns: 1fr;

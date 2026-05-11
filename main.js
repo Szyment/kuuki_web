@@ -27,9 +27,6 @@ const elements = {
   lastUpdatedValue: document.getElementById("last-updated-value"),
   statusFallbackNote: document.getElementById("status-fallback-note"),
   footerDataState: document.getElementById("footer-data-state"),
-  dashboardHeroLink: document.getElementById("dashboard-hero-link"),
-  dashboardNavLink: document.getElementById("dashboard-nav-link"),
-  dashboardCardLink: document.getElementById("dashboard-card-link"),
   themeToggle: document.getElementById("theme-toggle"),
   navToggle: document.querySelector(".nav-toggle"),
   navPanel: document.getElementById("site-menu")
@@ -164,7 +161,7 @@ function deriveAirStatus(payload, measurements) {
 
   if ((hasPm25 && pm25 > 35) || (hasPm10 && pm10 > 60)) {
     return {
-      status: "SŁABSZY",
+      status: "SŁABY",
       statusColor: "red",
       description: "Warto ograniczyć intensywne aktywności i obserwować kolejne odczyty."
     };
@@ -238,7 +235,7 @@ function setStatusTheme(statusColor, isFallback) {
   const badge = elements.heroLiveBadge;
   const root = document.documentElement;
 
-  if (!pill || !badge || !root) return;
+  if (!badge || !root) return;
 
   const palette = {
     green: {
@@ -260,8 +257,10 @@ function setStatusTheme(statusColor, isFallback) {
 
   const theme = palette[statusColor] || palette.green;
 
-  pill.style.background = theme.soft;
-  pill.style.color = theme.text;
+  if (pill) {
+    pill.style.background = theme.soft;
+    pill.style.color = theme.text;
+  }
   badge.querySelector(".live-dot").style.background = isFallback ? theme.text : theme.dot;
   badge.querySelector(".live-dot").style.boxShadow = isFallback
     ? "0 0 0 6px rgba(204, 139, 24, 0.12)"
@@ -324,17 +323,31 @@ function renderLiveData(data, options = {}) {
   const relativeTimestamp =
     data.lastUpdatedRelative || formatRelativeTime(data.updatedAtRaw) || data.lastUpdated;
 
-  elements.statusLabel.textContent = data.status;
-  elements.statusDescription.textContent = data.description;
-  elements.locationValue.textContent = data.location;
-  elements.lastUpdatedValue.textContent = data.lastUpdated;
-  elements.heroLiveBadgeText.textContent =
-    badgeText ||
-    (loading
-      ? "Ładowanie danych na żywo…"
-      : isFallback
-        ? `Brak danych na żywo · ostatnia poprawna aktualizacja ${relativeTimestamp}`
-        : `NA ŻYWO · aktualizacja ${relativeTimestamp}`);
+  if (elements.statusLabel) {
+    elements.statusLabel.textContent = data.status;
+  }
+
+  if (elements.statusDescription) {
+    elements.statusDescription.textContent = data.description;
+  }
+
+  if (elements.locationValue) {
+    elements.locationValue.textContent = data.location;
+  }
+
+  if (elements.lastUpdatedValue) {
+    elements.lastUpdatedValue.textContent = data.lastUpdated;
+  }
+
+  if (elements.heroLiveBadgeText) {
+    elements.heroLiveBadgeText.textContent =
+      badgeText ||
+      (loading
+        ? "Ładowanie danych na żywo…"
+        : isFallback
+          ? `Brak danych na żywo · ostatnia poprawna aktualizacja ${relativeTimestamp}`
+          : `NA ŻYWO · aktualizacja ${relativeTimestamp}`);
+  }
   elements.footerDataState.textContent = sourceLabel;
 
   setStatusTheme(data.statusColor, isFallback);
@@ -456,35 +469,6 @@ async function refreshLiveData() {
   }
 }
 
-function configureDashboardLinks() {
-  const links = [
-    elements.dashboardHeroLink,
-    elements.dashboardNavLink,
-    elements.dashboardCardLink
-  ];
-
-  for (const link of links) {
-    if (!link) continue;
-
-    if (config.dashboardUrl) {
-      link.href = config.dashboardUrl;
-      link.classList.remove("is-disabled");
-      link.removeAttribute("aria-disabled");
-      if (link.id === "dashboard-hero-link") {
-        link.innerHTML = 'Zobacz dane na żywo <span aria-hidden="true">→</span>';
-      }
-      continue;
-    }
-
-    link.href = "#faq";
-    link.classList.add("is-disabled");
-    link.setAttribute("aria-disabled", "true");
-    if (link.id === "dashboard-hero-link") {
-      link.innerHTML = "Panel w przygotowaniu";
-    }
-  }
-}
-
 function applyTheme(theme) {
   const resolvedTheme = theme === "dark" ? "dark" : "light";
   document.documentElement.dataset.theme = resolvedTheme;
@@ -534,7 +518,6 @@ function setupMobileNav() {
 }
 
 function init() {
-  configureDashboardLinks();
   setupThemeToggle();
   setupMobileNav();
   renderLiveData(normalizeLiveData(DEFAULT_LIVE_DATA), {

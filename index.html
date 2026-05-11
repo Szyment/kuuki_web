@@ -21,9 +21,9 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260509-3" />
-    <script src="./config.js?v=20260509-3" defer></script>
-    <script src="./main.js?v=20260509-3" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=20260511-2" />
+    <script src="./config.js?v=20260511-2" defer></script>
+    <script src="./main.js?v=20260511-2" defer></script>
   </head>
   <body>
     <div class="page-shell">
@@ -51,10 +51,7 @@
           <div class="nav-panel" id="site-menu">
             <div class="nav-links">
               <a href="#dane-live">Dane na żywo</a>
-              <a href="#jak-dziala">Jak działa</a>
-              <a href="#dla-nauczycieli">Dla nauczycieli</a>
-              <a href="#dla-szkoly">Dla szkoły</a>
-              <a href="#faq">FAQ</a>
+              <a href="#co-oznaczaja-pmy">Co oznaczają PM-y?</a>
             </div>
             <button
               class="button button-secondary theme-toggle"
@@ -65,15 +62,6 @@
             >
               Jasny / ciemny
             </button>
-            <a
-              class="button button-primary nav-cta"
-              id="dashboard-nav-link"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Zobacz panel
-            </a>
           </div>
         </nav>
       </header>
@@ -96,18 +84,8 @@
               </p>
 
               <div class="hero-actions">
-                <a
-                  class="button button-primary"
-                  id="dashboard-hero-link"
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Zobacz dane na żywo
-                  <span aria-hidden="true">→</span>
-                </a>
-                <a class="button button-secondary" href="#jak-dziala">
-                  Jak działa projekt
+                <a class="button button-secondary" href="#co-oznaczaja-pmy">
+                  Co oznaczają PM-y?
                 </a>
               </div>
 
@@ -124,21 +102,16 @@
                     />
                   </svg>
                 </span>
-                <span>Projekt edukacyjny · Dane lokalne · Transparentna metodologia</span>
+                <span>Projekt edukacyjny</span>
               </div>
             </div>
 
             <aside class="status-card">
               <div class="status-card-top">
-                <div class="status-summary">
-                  <p class="eyebrow">Status powietrza teraz</p>
-                  <div class="status-pill" id="status-pill">
-                    <span class="status-pill-dot" aria-hidden="true"></span>
-                    <span id="status-label">DOBRY</span>
-                  </div>
-                  <p class="status-description" id="status-description">
-                    Powietrze jest w dobrym zakresie. Możecie normalnie prowadzić
-                    zajęcia.
+                <div class="status-card-heading">
+                  <p class="eyebrow">Aktualne pomiary pyłów</p>
+                  <p class="status-card-note">
+                    Trzy najważniejsze wskaźniki jakości powietrza z czujnika szkolnego.
                   </p>
                 </div>
 
@@ -164,317 +137,46 @@
                 </div>
               </div>
 
-              <div class="metadata-row">
-                <div class="metadata-item">
-                  <span class="metadata-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img">
-                      <path
-                        d="M12 21s7-4.7 7-11a7 7 0 1 0-14 0c0 6.3 7 11 7 11Z"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.8"
-                      />
-                      <circle cx="12" cy="10" r="2.2" fill="currentColor" />
-                    </svg>
-                  </span>
-                  <span>
-                    Lokalizacja:
-                    <strong id="location-value">Klasa 2D</strong>
-                  </span>
-                </div>
-
-                <div class="metadata-item">
-                  <span class="metadata-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img">
-                      <path
-                        d="M12 7v5l3 2"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.8"
-                      />
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      />
-                    </svg>
-                  </span>
-                  <span>
-                    Ostatnia aktualizacja:
-                    <strong id="last-updated-value">12:42</strong>
-                  </span>
-                </div>
-              </div>
-
               <div class="status-fallback hidden" id="status-fallback-note"></div>
-
-              <a
-                class="dashboard-link"
-                id="dashboard-card-link"
-                href="#"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span class="dashboard-link-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img">
-                    <path
-                      d="M4 17h4V9H4v8Zm6 0h4V5h-4v12Zm6 0h4v-6h-4v6Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-                <span>Zobacz pełny panel ›</span>
-              </a>
             </aside>
           </div>
         </section>
 
-        <section class="section section-benefits">
+        <section class="section section-pm-guide" id="co-oznaczaja-pmy">
           <div class="container">
             <div class="section-heading centered">
-              <p class="section-kicker">Dlaczego Kuuki?</p>
-              <h2>Dane o powietrzu, które szkoła może naprawdę wykorzystać.</h2>
-            </div>
-
-            <div class="benefits-grid">
-              <article class="benefit-card">
-                <span class="benefit-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img">
-                    <path
-                      d="M12 3 5 6v5c0 4.4 2.6 8.4 7 10 4.4-1.6 7-5.6 7-10V6l-7-3Z"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <h3>Dla dyrekcji</h3>
-                <p>
-                  Widoczny projekt środowiskowy, który buduje wizerunek szkoły i
-                  zaufanie społeczności.
-                </p>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img">
-                    <path
-                      d="M4 13c2.2-2.4 4.7-3.6 7.6-3.6 2.8 0 5.4 1 8.4 3.2"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="M4 18c1.9-1.8 4.1-2.7 6.7-2.7 2.6 0 5.2.9 8.3 2.7"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-width="1.8"
-                      opacity="0.7"
-                    />
-                    <path
-                      d="M6 8c1.3-1.2 2.9-1.8 4.7-1.8 1.8 0 3.8.8 5.8 2.4"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-width="1.8"
-                      opacity="0.5"
-                    />
-                  </svg>
-                </span>
-                <h3>Dla administracji</h3>
-                <p>
-                  Lepsze decyzje: kiedy wietrzyć, jak reagować na wzrost pyłu, jak
-                  planować działania.
-                </p>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img">
-                    <path
-                      d="M4 6.5C4 5.1 5.1 4 6.5 4H11v15H6.5A2.5 2.5 0 0 1 4 16.5v-10Z"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linejoin="round"
-                      stroke-width="1.8"
-                    />
-                    <path
-                      d="M20 6.5C20 5.1 18.9 4 17.5 4H13v15h4.5a2.5 2.5 0 0 0 2.5-2.5v-10Z"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linejoin="round"
-                      stroke-width="1.8"
-                    />
-                  </svg>
-                </span>
-                <h3>Dla nauczycieli</h3>
-                <p>
-                  Gotowe materiały do lekcji biologii, geografii, matematyki,
-                  informatyki, chemii i fizyki.
-                </p>
-              </article>
-
-              <article class="benefit-card">
-                <span class="benefit-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img">
-                    <path d="M5 17h3V9H5v8Zm5 0h3V5h-3v12Zm5 0h4v-6h-4v6Z" fill="currentColor" />
-                  </svg>
-                </span>
-                <h3>Dla uczniów</h3>
-                <p>
-                  Realne dane z własnej szkoły zamiast abstrakcyjnych przykładów z
-                  podręczników.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="section section-process" id="jak-dziala">
-          <div class="container">
-            <div class="section-heading">
-              <p class="section-kicker">Jak działa</p>
-              <h2>Od czujnika w budynku do decyzji i materiału edukacyjnego.</h2>
+              <p class="section-kicker">Co Oznaczają PM-y?</p>
+              <h2>Każdy wskaźnik pokazuje pyły o innej wielkości.</h2>
               <p>
-                Kuuki łączy szkolny sensor, prosty panel danych i czytelną narrację,
-                dzięki której dane stają się praktyczne dla całej społeczności.
+                Im mniejsza cząstka, tym głębiej może dostać się do układu oddechowego.
+                Dlatego patrzymy jednocześnie na PM 1.0, PM 2.5 i PM 10.
               </p>
             </div>
 
-            <div class="process-grid">
-              <article class="process-card">
-                <span class="process-step">01</span>
-                <h3>Pomiar w czasie rzeczywistym</h3>
+            <div class="pm-guide-grid">
+              <article class="pm-guide-card">
+                <h3>PM 1.0</h3>
                 <p>
-                  Stacja zbiera lokalne dane o pyle zawieszonym i publikuje je w
-                  lobby oraz w panelu online.
+                  Najdrobniejsze cząstki pyłu. Pokazują bardzo małe frakcje
+                  zanieczyszczeń unoszących się w powietrzu.
                 </p>
               </article>
-              <article class="process-card">
-                <span class="process-step">02</span>
-                <h3>Jasny status dla szkoły</h3>
-                <p>
-                  Dyrekcja i administracja widzą aktualny stan, czas ostatniego
-                  odczytu i mogą szybciej reagować na zmiany.
-                </p>
-              </article>
-              <article class="process-card">
-                <span class="process-step">03</span>
-                <h3>Dane, które uczą</h3>
-                <p>
-                  Nauczyciele pracują na prawdziwych pomiarach z własnej szkoły,
-                  zamiast na sztucznych przykładach z podręcznika.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
 
-        <section class="section split-section" id="dla-nauczycieli">
-          <div class="container split-grid">
-            <div class="split-copy">
-              <p class="section-kicker">Dla nauczycieli</p>
-              <h2>Gotowy materiał do zajęć oparty o własne szkolne dane.</h2>
-              <p>
-                Kuuki pozwala pracować na danych z najbliższego otoczenia uczniów:
-                analizować trendy, porównywać dni, liczyć średnie i rozmawiać o
-                wpływie środowiska na zdrowie.
-              </p>
-            </div>
-
-            <div class="feature-panel">
-              <article class="feature-item">
-                <h3>Biologia i chemia</h3>
-                <p>Wpływ pyłów na organizm, smog i skład powietrza.</p>
-              </article>
-              <article class="feature-item">
-                <h3>Matematyka i informatyka</h3>
-                <p>Średnie, wykresy, trendy, odczyt danych i proste analizy.</p>
-              </article>
-              <article class="feature-item">
-                <h3>Geografia i fizyka</h3>
-                <p>Sezonowość, warunki lokalne i zależność pomiarów od pogody.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="section split-section split-section-alt" id="dla-szkoly">
-          <div class="container split-grid">
-            <div class="feature-panel feature-panel-metrics">
-              <article class="metric-card">
-                <span>Transparentność</span>
-                <strong>Live status w lobby</strong>
-              </article>
-              <article class="metric-card">
-                <span>Operacyjność</span>
-                <strong>Szybsze decyzje administracji</strong>
-              </article>
-              <article class="metric-card">
-                <span>Wizerunek</span>
-                <strong>Widoczny projekt ESG dla szkoły</strong>
-              </article>
-            </div>
-
-            <div class="split-copy">
-              <p class="section-kicker">Dla szkoły</p>
-              <h2>Projekt, który jednocześnie informuje, wspiera i buduje zaufanie.</h2>
-              <p>
-                Kuuki jest prosty do pokazania rodzicom, uczniom i partnerom szkoły.
-                Dane są aktualne, lokalne i czytelne, a sam projekt wzmacnia obraz
-                placówki jako miejsca nowoczesnego i odpowiedzialnego.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section section-faq" id="faq">
-          <div class="container">
-            <div class="section-heading">
-              <p class="section-kicker">FAQ</p>
-              <h2>Najczęstsze pytania o wdrożenie Kuuki.</h2>
-            </div>
-
-            <div class="faq-list">
-              <details class="faq-item">
-                <summary>Czy dane są pokazywane na żywo?</summary>
+              <article class="pm-guide-card">
+                <h3>PM 2.5</h3>
                 <p>
-                  Tak. Strona jest przygotowana do pobierania aktualnych odczytów z
-                  API i wyświetla czas ostatniej poprawnej aktualizacji.
+                  Drobny pył, który może docierać głębiej do płuc. To jeden z
+                  najważniejszych wskaźników jakości powietrza z punktu widzenia zdrowia.
                 </p>
-              </details>
-              <details class="faq-item">
-                <summary>Co jeśli czujnik chwilowo nie wyśle danych?</summary>
+              </article>
+
+              <article class="pm-guide-card">
+                <h3>PM 10</h3>
                 <p>
-                  Interfejs przechodzi w tryb awaryjny: pokazuje komunikat o braku
-                  nowych danych i utrzymuje ostatni poprawny odczyt jako fallback.
+                  Większe cząstki pyłu, często związane z kurzem i wzbijaniem
+                  zanieczyszczeń z otoczenia szkoły.
                 </p>
-              </details>
-              <details class="faq-item">
-                <summary>Czy panel można osadzić na ekranie w lobby?</summary>
-                <p>
-                  Tak. CTA są przygotowane do podpięcia pod pełny panel lub ekran
-                  statusowy w osobnym widoku.
-                </p>
-              </details>
-              <details class="faq-item">
-                <summary>Czy szkoła może dostosować sekcje i treści?</summary>
-                <p>
-                  Tak. Strona jest statyczna i łatwa do edycji, więc można dopisać
-                  własne moduły, partnerów, zdjęcia lub dodatkowe wskaźniki.
-                </p>
-              </details>
+              </article>
             </div>
           </div>
         </section>
@@ -488,6 +190,14 @@
           </div>
           <div class="footer-meta">
             <span id="footer-data-state">Tryb demonstracyjny danych</span>
+            <a
+              class="footer-link"
+              href="https://github.com/Szyment/kuuki"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Zobacz projekt na GitHubie →
+            </a>
             <a href="#top">Wróć na górę ↑</a>
           </div>
         </div>
